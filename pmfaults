@@ -13,4 +13,4 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-awk '{ if (NR > 1) { print $1, $11 - prevMin, $13 - prevMaj }; prevMin = $11; prevMaj = $13 }'
+awk '{ if (NR > 1) { print $1, $11 - prevMin, $13 - prevMaj }; prevMin = $11; prevMaj = $13 }' $@
