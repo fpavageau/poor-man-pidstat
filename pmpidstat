@@ -32,9 +32,10 @@ if [ $# != 0 ]; then
   fi
 fi
 
+STAT=/proc/$PID/stat
 I=0
-while true; do
-  echo $(date +%s) $(cat /proc/$PID/stat)
+while [ -f $STAT ]; do
+  echo $(date +%s) $(cat $STAT)
   I=$((I + 1))
   if [ $I = $COUNT ]; then
     break
