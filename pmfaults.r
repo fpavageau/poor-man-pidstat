@@ -43,7 +43,7 @@ for (i in 1:argc) {
     }
 }
 
-colors <- rainbow(argc)
+colors <- rainbow(argc, alpha = 0.5)
 
 png("faults.png", width = 1200, height = 1200)
 par(mfrow = c(2, 1))
