@@ -28,14 +28,14 @@ readTimes <- function(index, filename) {
 }
 
 argc <- length(argv)
-faults <- list()
+times <- list()
 maxUsr <- 0
 maxSys <- 0
 for (i in 1:argc) {
     currentTimes <- readTimes(i, argv[i])
     maxUsr <- max(c(maxUsr, range(currentTimes[2])[2]))
     maxSys <- max(c(maxSys, range(currentTimes[3])[2]))
-    faults[[i]] <- currentTimes
+    times[[i]] <- currentTimes
     if (i == 1) {
         mergedTimes <- currentTimes
     } else {
@@ -50,7 +50,7 @@ par(mfrow = c(2, 1))
 
 plot(x = mergedTimes$d, y = mergedTimes$usr1, type = "n", xlab = "Time", ylab = "User time", ylim = c(0, maxUsr))
 for (i in 1:argc) {
-    currentTimes <- faults[[i]]
+    currentTimes <- times[[i]]
     name <- names(currentTimes)[2]
     names(currentTimes)[2] <- "value"
     lines(x = currentTimes$d, y = currentTimes$value, type = "o", col = colors[i], lwd = 3, pch = 16, cex = .5)
@@ -60,7 +60,7 @@ legend("topright", inset = .05, bty = "n", argv, lwd = c(3, 3), col = colors, ce
 
 plot(x = mergedTimes$d, y = mergedTimes$sys1, type = "n", xlab = "Time", ylab = "System time", ylim = c(0, maxSys))
 for (i in 1:argc) {
-    currentTimes <- faults[[i]]
+    currentTimes <- times[[i]]
     name <- names(currentTimes)[3]
     names(currentTimes)[3] <- "value"
     lines(x = currentTimes$d, y = currentTimes$value, type = "o", col = colors[i], lwd = 3, pch = 16, cex = .5)
