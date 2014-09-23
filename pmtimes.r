@@ -29,12 +29,12 @@ readTimes <- function(index, filename) {
 
 argc <- length(argv)
 faults <- list()
-maxMinor <- 0
-maxMajor <- 0
+maxUsr <- 0
+maxSys <- 0
 for (i in 1:argc) {
     currentTimes <- readTimes(i, argv[i])
-    maxMinor <- max(c(maxMinor, range(currentTimes[2])[2]))
-    maxMajor <- max(c(maxMajor, range(currentTimes[3])[2]))
+    maxUsr <- max(c(maxUsr, range(currentTimes[2])[2]))
+    maxSys <- max(c(maxSys, range(currentTimes[3])[2]))
     faults[[i]] <- currentTimes
     if (i == 1) {
         mergedTimes <- currentTimes
@@ -48,7 +48,7 @@ colors <- rainbow(argc, alpha = 0.5)
 png("times.png", width = 1200, height = 1200)
 par(mfrow = c(2, 1))
 
-plot(x = mergedTimes$d, y = mergedTimes$usr1, type = "n", xlab = "Time", ylab = "User time", ylim = c(0, maxMinor))
+plot(x = mergedTimes$d, y = mergedTimes$usr1, type = "n", xlab = "Time", ylab = "User time", ylim = c(0, maxUsr))
 for (i in 1:argc) {
     currentTimes <- faults[[i]]
     name <- names(currentTimes)[2]
@@ -58,7 +58,7 @@ for (i in 1:argc) {
 }
 legend("topright", inset = .05, bty = "n", argv, lwd = c(3, 3), col = colors, cex = 1.5)
 
-plot(x = mergedTimes$d, y = mergedTimes$sys1, type = "n", xlab = "Time", ylab = "System time", ylim = c(0, maxMajor))
+plot(x = mergedTimes$d, y = mergedTimes$sys1, type = "n", xlab = "Time", ylab = "System time", ylim = c(0, maxSys))
 for (i in 1:argc) {
     currentTimes <- faults[[i]]
     name <- names(currentTimes)[3]
